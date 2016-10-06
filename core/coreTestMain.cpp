@@ -1,11 +1,12 @@
 #include "CTextButton.h"
+#include "CStaticTextBox.h"
 #include <iostream>
 
 int main()
 {
-	CCore::CTextButton button (0,0, 300,100, "Some string");
+	CCore::CStaticTextBox textBox (0,0, 300,100, "Some string");
 
-	std::cout << button.getText() << std::endl;
+	std::cout << textBox.getText() << std::endl;
 
 	return 0;
 }

@@ -7,7 +7,7 @@ namespace CCore
 {
 	class CBoundsBox
 	{
-	private:
+	protected:
 		int X1;
 		int Y1;
 
