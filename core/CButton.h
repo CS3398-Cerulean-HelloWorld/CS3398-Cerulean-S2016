@@ -39,10 +39,12 @@ namespace CCore
 		//functions to set button position, maintaining button size.
 		void setX(int);
 		void setY(int);
+		void setPosition(int X, int Y) { setX(X); setY(Y); }
 
 		//functions to set button size
 		void setWidth(int Width) { X2 = X1 + Width; }
 		void setHeight(int Height) { Y2 = Y1 + Height; }
+		void setSize(int Width, int Height) { setWidth(Width); setHeight(Height); }
 
 		//functions to get button size
 		int getWidth() { return (X2 - X1); }
