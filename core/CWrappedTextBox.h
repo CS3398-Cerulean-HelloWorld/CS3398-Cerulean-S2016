@@ -27,6 +27,9 @@ namespace CCore
 
 		void setText(const char*);
 
+		//function to draw text in text box
+		void draw(sf::Window&);
+
 	};
 
 	//default constructor
@@ -80,5 +83,27 @@ namespace CCore
 		SFText.setFont(font);
 
 		validText = true;
+	}
+
+	void CWrappedTextBox::setTextSize(int pxSize)
+	{
+		SFText.setCharacterSize(pxSize);
+	}
+
+	void CWrappedTextBox::setTextStyle(sf::Text style)
+	{
+		SFText.setStyle(style);
+	}
+
+	void CWrappedTextBox::setTextColor(sf::Color color)
+	{
+		SFText.setColor(color);
+	}
+
+	void CWrappedTextBox::draw(sf::Window& window)
+	{
+		SFText.setPosition(X1, Y1);
+
+		window.draw(SFText);
 	}
 }
