@@ -56,6 +56,10 @@ void story::setVariables(int location)
                 health += healthEffect;
             }
         }
+        else
+        {
+            cout << "Story  ROW=[" << location << "] is missing data.\n";
+        }
 
     }
     else
