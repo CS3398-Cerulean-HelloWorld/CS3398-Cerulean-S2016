@@ -9,8 +9,9 @@ using namespace std;
 class text
 {
 private:
-    char** story2d;
-    int storySize;
+    char*** storyData;
+    int storyPages;
+    int* storyPageSize;
 
 public:
     string storyText;
@@ -26,6 +27,9 @@ public:
      void inputText(const char*);
      void setVariables(int);
 
+     void clear();
+
+     text();
      ~text();
 };
 

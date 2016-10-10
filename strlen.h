@@ -1,7 +1,17 @@
 #ifndef STRLEN_H_INCLUDED
 #define STRLEN_H_INCLUDED
 
-#include "def.h"
+#ifndef str
+#define str char*
+#endif // str
+
+#ifndef chr
+#define chr char
+#endif // chr
+
+#ifndef null
+#define null '\0'
+#endif // null
 
 int len(const str String)
 {

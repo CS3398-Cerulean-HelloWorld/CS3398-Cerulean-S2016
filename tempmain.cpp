@@ -13,10 +13,11 @@ int main()
     object1.setVariables(0);
     while(true)
     {
-        cout<<object1.storyText<<endl<<object1.option1Text<< ' ' << object1.option1location
-            <<endl<<object1.option2Text<< ' ' << object1.option2location
-            <<endl<<object1.option3Text<< ' ' << object1.option3location<<endl
-            <<"Enter Choice: ";
+        cout<<object1.storyText
+            <<endl<< "1: " << object1.option1Text
+            <<endl<< "2: " << object1.option2Text
+            <<endl<< "3: " << object1.option3Text
+            <<endl<<"Enter Choice: ";
         cin>>choice;
         if(choice == 1)
             object1.setVariables(object1.option1location);

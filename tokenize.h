@@ -1,11 +1,19 @@
-///Code written by Zachary Westerman, 2016
+///Code written by Zachary Westerman, Feb. 2016.
+///
 
 #ifndef TOKENIZE_H_INCLUDED
 #define TOKENIZE_H_INCLUDED
 
-#include "def.h"
 #include "strappend.h"
 #include "strlen.h"
+
+#ifndef str
+#define str char*
+#endif // str
+
+#ifndef chr
+#define chr char
+#endif // chr
 
 //function that appends a string to the end of a string
 //array, and increases the size appropriately.
@@ -33,7 +41,8 @@ void tok_arr_append(str*& strArray, int& arrSize, str newStr)
 
 //function to separate a string into tokens, given any number of delimiters and 2 quotation symbols.
 //tokens are returned as a string array, through parameter
-void tokenize(const str String, const str delim, const str enquote, str*& outStrArray, int& outSize, bool removeQuotes)
+void tokenize(const str String, const str delim, const str enquote, str*& outStrArray, int& outSize,
+              bool removeQuotes, bool separateQuoted)
 {
     //get rid of any garbage data
     if (outStrArray)
@@ -111,24 +120,32 @@ void tokenize(const str String, const str delim, const str enquote, str*& outStr
 
             if (inQuotes)
             {
-                if (isOpenQuote && thisToken)
+                if (separateQuoted)
                 {
-                    tok_arr_append(outStrArray, outSize, thisToken);
+                    if (isOpenQuote && thisToken)
+                    {
+                        tok_arr_append(outStrArray, outSize, thisToken);
 
-                    thisToken = NULL;
+                        thisToken = NULL;
+                    }
+
+                    if (!removeQuotes || (!isOpenQuote && !isCloseQuote))
+                    {
+                        append(thisToken, String[i]);
+                    }
+
+                    if (isCloseQuote && thisToken)
+                    {
+                        tok_arr_append(outStrArray, outSize, thisToken);
+
+                        thisToken = NULL;
+                    }
                 }
-
-                if (!removeQuotes || (!isOpenQuote && !isCloseQuote))
+                else
                 {
                     append(thisToken, String[i]);
                 }
 
-                if (isCloseQuote && thisToken)
-                {
-                    tok_arr_append(outStrArray, outSize, thisToken);
-
-                    thisToken = NULL;
-                }
             }
             else if (isDelim)
             {
@@ -163,15 +180,16 @@ void tokenize(const str String, const str delim, const str enquote, str*& outStr
 }
 
 //same as tokenize, but allows a single char delimiter
-void tokenize(const str String, const chr delim, const str enquote, str*& outStrArray, int& outSize, bool removeQuotes)
+void tokenize(const str String, const chr delim, const str enquote, str*& outStrArray, int& outSize,
+              bool removeQuotes, bool separateQuoted)
 {
     str delimiter = NULL;
     append(delimiter, delim);
 
-    tokenize(String, delimiter, enquote, outStrArray, outSize, removeQuotes);
+    tokenize(String, delimiter, enquote, outStrArray, outSize, removeQuotes, separateQuoted);
 }
 
-void delTok(str*& strTok, int& Lines)
+void delTok(str*& strTok, int Lines)
 {
     if (strTok)
     {
@@ -184,5 +202,150 @@ void delTok(str*& strTok, int& Lines)
     }
 }
 
+
+int countTokens(const str String, const str delim, const str enquote,
+                bool removeQuotes, bool separateQuoted)
+{
+    if (String)
+    {
+        int Tokens = 0;
+
+        int length = len(String);
+
+        str thisToken = NULL;
+
+        bool inQuotes = false;
+
+        bool isOpenQuote = false;
+        bool isCloseQuote = false;
+        bool isDelim = false;
+
+        //for every character in the string
+        for (int i=0; i<length; i++)
+        {
+            isOpenQuote = false;
+            isCloseQuote = false;
+            isDelim = false;
+
+            //if there are quotes, determine whether we're within them
+            if (enquote)
+            {
+                if (inQuotes)
+                {
+                    if (String[i] == enquote[1])
+                    {
+                        isCloseQuote = true;
+                    }
+                }
+                else
+                {
+                    if (String[i] == enquote[0])
+                    {
+                        isOpenQuote = true;
+                    }
+                }
+            }
+
+            //if current character is an open quote, we are within quotes
+            if (isOpenQuote)
+                inQuotes = true;
+
+
+            //if the current character is one of the delimiters
+            int j = 0;
+            if (delim && !inQuotes)
+            {
+                while (!isDelim && (delim[j] != null))
+                {
+                    if (String[i] == delim[j])
+                    {
+                        isDelim = true;
+                    }
+
+                    j++;
+                }
+            }
+
+
+
+            if (inQuotes)
+            {
+                if (separateQuoted)
+                {
+                    if (isOpenQuote && thisToken)
+                    {
+                        Tokens++;
+
+                        delete[] thisToken;
+                        thisToken = NULL;
+                    }
+
+                    if (!removeQuotes || (!isOpenQuote && !isCloseQuote))
+                    {
+                        append(thisToken, String[i]);
+                    }
+
+                    if (isCloseQuote && thisToken)
+                    {
+                        Tokens++;
+
+                        delete[] thisToken;
+                        thisToken = NULL;
+                    }
+                }
+                else
+                {
+                    append(thisToken, String[i]);
+                }
+
+            }
+            else if (isDelim)
+            {
+                if (thisToken)
+                {
+                    Tokens++;
+
+                    delete[] thisToken;
+                    thisToken = NULL;
+                }
+            }
+            else
+            {
+                append(thisToken, String[i]);
+            }
+
+
+
+            if (isCloseQuote)
+                inQuotes = false;
+
+        }
+
+        //once we finish parsing the string, if we have a completed
+        //token, add it to the output.
+        if (thisToken)
+        {
+            Tokens++;
+
+            delete[] thisToken;
+            thisToken = NULL;
+        }
+
+        return Tokens;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int countTokens(const str String, const chr delim, const str enquote,
+                bool removeQuotes, bool separateQuoted)
+{
+    str delimiter = NULL;
+    append(delimiter, delim);
+
+    return countTokens(String, delimiter, enquote, removeQuotes, separateQuoted);
+}
 
 #endif // TOKENIZE_H_INCLUDED

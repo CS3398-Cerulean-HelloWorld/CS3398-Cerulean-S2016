@@ -1,8 +1,15 @@
 #ifndef STRAPPEND_H_INCLUDED
 #define STRAPPEND_H_INCLUDED
 
-#include "def.h"
 #include "strlen.h"
+
+#ifndef str
+#define str char*
+#endif // str
+
+#ifndef chr
+#define chr char
+#endif
 
 //function that appends char B to string A
 void append(str& A, const chr B)
