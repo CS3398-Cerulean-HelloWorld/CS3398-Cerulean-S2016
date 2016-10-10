@@ -12,6 +12,9 @@ private:
     csvData storyData;
 
 public:
+    int currentPage;
+    int health;
+
     string storyText;
     string option1Text;
     string option2Text;

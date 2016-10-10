@@ -4,6 +4,9 @@
 #include <fstream>
 #include "tokenize.h"
 
+#include <iostream>
+using namespace std;
+
 class csvData
 {
 private:
@@ -31,7 +34,7 @@ bool csvData::load(const char* fileName)
     std::ifstream fin;
     fin.open(fileName);
 
-    if (fin.bad())
+    if (!fin)
         return false;
 
     fin.seekg(0,std::ios::end);
@@ -40,6 +43,8 @@ bool csvData::load(const char* fileName)
 
     char* contents = new char[size];
     fin.read(contents, size);
+
+    fin.close();
 
 
     //clear any previously loaded data.
@@ -79,6 +84,12 @@ bool csvData::bad()
 
 bool csvData::isValidCell(int Row, int Cell)
 {
+    //min cell position should be (1, 1),
+    //so to access the appropriate data, decrease by 1.
+    Row--;
+    Cell--;
+
+    //return whether the cell is within bounds.
     if ((Row >= 0) && (Row < Rows) &&
         (Cell >= 0) && (Cell < RowCells[Row]))
         return true;
@@ -88,8 +99,15 @@ bool csvData::isValidCell(int Row, int Cell)
 
 const char* csvData::getCell(int Row, int Cell)
 {
+    //return data the appropriate cell contains,
+    //or NULL if cell coordinates are invalid.
     if (isValidCell(Row, Cell))
     {
+        //min cell position should be (1, 1),
+        //so to access the appropriate data, decrease by 1.
+        Row--;
+        Cell--;
+
         return Data[Row][Cell];
     }
     else

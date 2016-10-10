@@ -9,7 +9,7 @@ int main()
 
     story object1;
     object1.inputText("gametext.csv");
-    object1.setVariables(0);
+    object1.setVariables(1);
     while(true)
     {
         cout<<object1.storyText
