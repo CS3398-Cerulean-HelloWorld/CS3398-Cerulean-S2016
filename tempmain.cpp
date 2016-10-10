@@ -1,6 +1,5 @@
 #include<iostream>
-#include "text.cpp"
-#include "text.h"
+#include "story.cpp"
 using namespace std;
 
 int main()
@@ -8,7 +7,7 @@ int main()
 
     int choice = 0;
 
-    text object1;
+    story object1;
     object1.inputText("gametext.csv");
     object1.setVariables(0);
     while(true)
