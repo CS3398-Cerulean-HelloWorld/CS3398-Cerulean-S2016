@@ -17,7 +17,7 @@ class Label : public Widget
 public:
 	///Public functions:
 
-	//Constructor (a label requires text and optionally a parent
+	//Constructor (a label requires text and a font, and optionally a parent)
 	Label(const std::string& text, const sf::Font& font, Widget* parent=nullptr);
 
 	//Destructor
