@@ -1,8 +1,14 @@
+#pragma once
 #ifndef BUTTON_H_INCLUDED
 #define BUTTON_H_INCLUDED
 
 #include "Widget.h"
 
+/*
+Base class for button widgets.
+This class cannot be drawn directly.
+Another inherited class must be created with a draw() function.
+*/
 class Button : public Widget
 {
   public:
