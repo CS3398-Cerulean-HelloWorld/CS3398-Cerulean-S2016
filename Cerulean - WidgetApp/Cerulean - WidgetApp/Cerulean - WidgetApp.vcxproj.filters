@@ -32,9 +32,6 @@
     <ClInclude Include="Widget\Container.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Widget\Frame.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Widget\Label.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -48,12 +45,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Widget\Widget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Widget\ActionTarget.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Widget\Action.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

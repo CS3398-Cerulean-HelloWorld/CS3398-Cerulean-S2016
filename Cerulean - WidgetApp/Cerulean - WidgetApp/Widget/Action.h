@@ -18,8 +18,8 @@ public:
 	Action(const Action& other);
 	const Action& operator=(const Action& other);
 
-	//Action(const sf::Keyboard::Key& key, int type = Type::RealTime | Type::Pressed);
-	//Action(const sf::Mouse::Button& button, int type = Type::RealTime | Type::Pressed);
+	Action(const sf::Keyboard::Key& key, int type = Type::RealTime | Type::Pressed);
+	Action(const sf::Mouse::Button& button, int type = Type::RealTime | Type::Pressed);
 
 	bool test()const;
 
@@ -45,7 +45,7 @@ const Action& Action::operator=(const Action& other)
 	return *this;
 }
 
-/*Action::Action(const sf::Keyboard::Key& key, int type) : _type(type)
+Action::Action(const sf::Keyboard::Key& key, int type) : _type(type)
 {
 	_event.type = sf::Event::EventType::KeyPressed;
 	_event.key.code = key;
@@ -55,7 +55,7 @@ Action::Action(const sf::Mouse::Button& button, int type) : _type(type)
 {
 	_event.type = sf::Event::EventType::MouseButtonPressed;
 	_event.mouseButton.button = button;
-}*/
+}
 
 bool Action::operator==(const sf::Event& event)const
 {

@@ -32,7 +32,7 @@ protected:
 	///Protected functions
 
 	//process events. Checks if mouse is pressed.
-	virtual bool processEvent(const sf::Event& event, const sf::Vector2f& parent_pos)override;
+	virtual int processEvent(const sf::Event& event, const sf::Vector2f& parent_pos)override;
 
 	//Default mouse behavior functions. Meant to be overridden.
 	virtual void onMouseEntered();
@@ -68,7 +68,7 @@ void Button::onMouseLeft() {}
 Button::FuncType Button::defaultFunc = [](const sf::Event&, Button&)->void {};
 
 //Function to process events. Returns true if the button has been pressed.
-bool Button::processEvent(const sf::Event& event, const
+int Button::processEvent(const sf::Event& event, const
 	sf::Vector2f& parent_pos)
 {
 	bool pressed = false;
@@ -123,7 +123,7 @@ bool Button::processEvent(const sf::Event& event, const
 	}
 
 	//return whether the button was pressed
-	return pressed;
+	return (int)pressed;
 }
 
 #endif // BUTTON_H_INCLUDED

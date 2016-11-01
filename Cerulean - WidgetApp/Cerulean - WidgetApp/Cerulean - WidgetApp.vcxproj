@@ -163,11 +163,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Widget\Action.h" />
-    <ClInclude Include="Widget\ActionTarget.h" />
     <ClInclude Include="Widget\Button.h" />
     <ClInclude Include="Widget\Container.h" />
-    <ClInclude Include="Widget\Frame.h" />
     <ClInclude Include="Widget\Label.h" />
     <ClInclude Include="Widget\Layout.h" />
     <ClInclude Include="Widget\TextButton.h" />

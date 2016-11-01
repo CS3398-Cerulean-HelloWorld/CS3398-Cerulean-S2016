@@ -20,7 +20,8 @@ public:
 	///Public functions
 
 	//Constructor (a text button requires text and a font, and optionally a parent)
-	TextButton(const std::string& text, const sf::Font& font, Widget* parent=nullptr);
+	TextButton(const std::string& text, const sf::Font& font, 
+			   const sf::Vector2f& size = sf::Vector2f(0,0), Widget* parent=nullptr);
 
 	//Destructor
 	virtual ~TextButton();
@@ -45,6 +46,15 @@ public:
 
 	//Get the size of the button as an sf::Vector2f object
 	virtual sf::Vector2f getSize()const override;
+
+	//Set the button size (no less than text size)
+	void setMinSize(const sf::Vector2f& size);
+
+protected:
+	///Protected variables
+
+	//Button minimum size
+	sf::Vector2f _buttonSize;
 
 private:
 	///Private functions
@@ -72,19 +82,18 @@ private:
 
 	//Button rectangle outline color
 	sf::Color _outlineColor;
-	
 };
 
 
 ///Constructors and destructors
 
 //Constructor. Sets button text and font, and parent if given.
-TextButton::TextButton(const std::string& text, const sf::Font& font, Widget* parent) : 
-	Button(parent), _label(text, font, this)
+TextButton::TextButton(const std::string& text, const sf::Font& font, const sf::Vector2f& size, Widget* parent) :
+	Button(parent), _label(text, font, this), _buttonSize(size)
 {
-  setFillColor(sf::Color(86,20,19));
-  setOutlineThickness(5);
-  setOutlineColor(sf::Color(146,20,19));
+	setFillColor(sf::Color(86,20,19));
+	setOutlineThickness(5);
+	setOutlineColor(sf::Color(146,20,19));
 }
 
 //Destructor
@@ -119,6 +128,11 @@ void TextButton::setOutlineColor(const sf::Color& color)
 //Set the button outline thickness
 void TextButton::setOutlineThickness(float thickness) {_shape.setOutlineThickness(thickness);}
 
+void TextButton::setMinSize(const sf::Vector2f& size) 
+{
+	_buttonSize.x = size.x;
+	_buttonSize.y = size.y;
+}
 
 ///Getters
 
@@ -139,7 +153,16 @@ void TextButton::updateShape()
   unsigned int char_size = _label.getCharacterSize();
 
   //scale the button according to the size of the text
-  _shape.setSize(sf::Vector2f(char_size*2 + label_size.x ,char_size*2 + label_size.y));
+  float x = char_size * 2 + label_size.x;
+  float y = char_size * 2 + label_size.y;
+
+  //but not smaller than our minimum size.
+  if (y < _buttonSize.y)
+	  y = _buttonSize.y;
+  if (x < _buttonSize.x)
+	  x = _buttonSize.x;
+
+  _shape.setSize(sf::Vector2f(x, y));
 
   //put the text in the center of the button
   _label.setPosition((float)char_size, (float)char_size);

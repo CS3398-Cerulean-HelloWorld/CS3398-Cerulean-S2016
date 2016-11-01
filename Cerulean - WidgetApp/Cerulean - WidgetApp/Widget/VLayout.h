@@ -2,7 +2,9 @@
 #ifndef VLAYOUT_H_INCLUDED
 #define VLAYOUT_H_INCLUDED
 
-#include "Widget.h"
+#include "Layout.h"
+#include <SFML/Graphics/RenderTarget.hpp>
+#include <vector>
 
 class VLayout : public Layout
 {
@@ -10,14 +12,14 @@ class VLayout : public Layout
   VLayout(const VLayout&) = delete;
   VLayout& operator=(const VLayout&) = delete;
   VLayout(Widget* parent = nullptr);
-  ~Vlayout();
+  ~VLayout();
 
   void add(Widget* widget);
   Widget* at(unsigned int index)const;
   virtual sf::Vector2f getSize()const override;
 
   protected:
-  virtual bool processEvent(const sf::Event& event,const sf::Vector2f& parent_pos) override;
+  virtual int processEvent(const sf::Event& event,const sf::Vector2f& parent_pos) override;
   virtual void processEvents(const sf::Vector2f& parent_pos) override;
 
   private:
@@ -28,9 +30,11 @@ class VLayout : public Layout
 
 
 VLayout::VLayout(Widget* parent) : Layout(parent) {}
+
 VLayout::~VLayout()
 {
-    for(Widget* widget : _widgets) {
+    for(Widget* widget : _widgets) 
+	{
         if(widget->_parent == this)
             delete widget;
     }
@@ -61,14 +65,22 @@ sf::Vector2f VLayout::getSize()const
 }
 
 
-bool VLayout::processEvent(const sf::Event& event,const sf::Vector2f& parent_pos)
+//Process internal events, returning the children pressed
+int VLayout::processEvent(const sf::Event& event,const sf::Vector2f& parent_pos)
 {
-  for(Widget* widget : _widgets)
-{
-    if(widget->processEvent(event,parent_pos))
-    return true;
-  }
-    return false ;
+	int result = 0;
+
+	int child = 1;
+
+	for(Widget* widget : _widgets)
+	{
+		if(widget->processEvent(event,parent_pos))
+			result = result | child;
+
+		child = child << 1;
+	}
+	
+	return result;
 }
 
 void VLayout::processEvents(const sf::Vector2f& parent_pos)
@@ -79,7 +91,7 @@ void VLayout::processEvents(const sf::Vector2f& parent_pos)
 
 void VLayout::updateShape()
 {
-  float max_x = (_parentparent->getSize().x:0);
+  float max_x = (_parent->getSize().x);
   for(Widget* widget : _widgets) {
   sf::Vector2f size = widget->getSize();
   float widget_x = size.x;
@@ -92,7 +104,7 @@ void VLayout::updateShape()
   for(Widget* widget : _widgets)
 {
     sf::Vector2f size = widget->getSize();
-    widget->setPosition((max_x-size.x)/2.0,pos_y);
+    widget->setPosition((float)((max_x-size.x)/2.0),(float)pos_y);
     pos_y += size.y + _space;
   }
   Widget::updateShape();

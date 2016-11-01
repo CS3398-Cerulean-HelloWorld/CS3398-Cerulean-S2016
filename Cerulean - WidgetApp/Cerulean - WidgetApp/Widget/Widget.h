@@ -32,20 +32,22 @@ public:
 	//get size, which will  be overridden
 	virtual sf::Vector2f getSize()const = 0;
 
+	//event processing, will be overridden
+	virtual int processEvent(const sf::Event& event, const sf::Vector2f& parent_pos);
+	virtual void processEvents(const sf::Vector2f& parent_pos);
+
+	///Public variables
+	
+	//parent widget
+	Widget* _parent;
+
 protected:
 	///Protected functions:
-
-	//event processing, will be overridden
-	virtual bool processEvent(const sf::Event& event,const sf::Vector2f& parent_pos);
-	virtual void processEvents(const sf::Vector2f& parent_pos);
 
 	//update the shape, will be overridden
 	virtual void updateShape();
 
 	///Protected variables:
-
-	//parent widget
-	Widget* _parent;
 
 	//position of this widget
 	sf::Vector2f _position;
@@ -82,7 +84,7 @@ const sf::Vector2f& Widget::getPosition()const {return _position;}
 ///Event processing
 
 //process a single event. Default function return false, will be overridden.
-bool Widget::processEvent(const sf::Event& event,const sf::Vector2f& parent_pos) {return false;}
+int Widget::processEvent(const sf::Event& event,const sf::Vector2f& parent_pos) {return false;}
 
 //process all events for this widget.
 void Widget::processEvents(const sf::Vector2f& parent_pos) {}

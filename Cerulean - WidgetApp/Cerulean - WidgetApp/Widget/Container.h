@@ -10,7 +10,7 @@ Defining class for the conatiner widget, which stores other widgets using a layo
 This class can be drawn directly.
 Use window->draw(Container) to do so.
 */
-class Container  : public Widget
+class Container : public Widget
 {
 public:
 	///Public functions
@@ -30,15 +30,15 @@ public:
 	//Get the size of this container
 	virtual sf::Vector2f getSize()const override;
 
+	//process events
+	virtual int processEvent(const sf::Event& event, const sf::Vector2f& parent_pos)override;
+	virtual void processEvents(const sf::Vector2f& parent_pos)override;
+
 protected:
 	///Protected functions
 
 	//draw the container widget. can be overridden.
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-
-	//process events
-	virtual bool processEvent(const sf::Event& event,const sf::Vector2f& parent_pos)override;
-	virtual void processEvents(const sf::Vector2f& parent_pos)override;
 
 private:
 	///Private variables
@@ -111,12 +111,17 @@ void Container::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 ///Event handling
 
-//Process an event 
-bool Container::processEvent(const sf::Event& event,const sf::Vector2f& parent_pos)
+//Process internal events, returning the children pressed
+int Container::processEvent(const sf::Event& event,const sf::Vector2f& parent_pos)
 {
-    bool result = false;
-    if(_layout)
-		result = _layout->processEvent(event,parent_pos);
+    int result = 0;
+
+	int child = 1;
+
+	if (_layout)
+	{
+		result = _layout->processEvent(event, parent_pos);
+	}
     return result;
 }
 
