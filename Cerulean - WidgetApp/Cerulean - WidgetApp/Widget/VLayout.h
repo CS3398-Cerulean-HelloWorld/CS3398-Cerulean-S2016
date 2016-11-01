@@ -1,3 +1,4 @@
+#pragma once
 #ifndef VLAYOUT_H_INCLUDED
 #define VLAYOUT_H_INCLUDED
 

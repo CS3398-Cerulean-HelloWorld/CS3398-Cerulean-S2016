@@ -1,52 +1,95 @@
+#pragma once
 #ifndef CONTAINER_H_INCLUDED
 #define CONTAINER_H_INCLUDED
 
-#include "Widget.h"
+#include "Layout.h"
+#include <SFML/Graphics/RenderTarget.hpp>
 
+/*
+Defining class for the conatiner widget, which stores other widgets using a layout.
+This class can be drawn directly.
+Use window->draw(Container) to do so.
+*/
 class Container  : public Widget
 {
-  public:
-  Container(Widget* parent=nullptr);
-  virtual ~Container();
+public:
+	///Public functions
 
-  void setLayout(Layout* layout);
-  Layout* getLayout()const;
+	//Constructor with optional parent
+	Container(Widget* parent=nullptr);
 
-  virtual sf::Vector2f getSize()const override;
+	//Destructor
+	virtual ~Container();
 
-  protected:
-  virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
-  virtual bool processEvent(const sf::Event& event,const sf::Vector2f& parent_pos)override;
-  virtual void processEvents(const sf::Vector2f& parent_pos)override;
+	//Set the layout of this container
+	void setLayout(Layout* layout);
 
-  private:
-  Layout* _layout;
+	//Get this container's layout
+	Layout* getLayout()const;
+
+	//Get the size of this container
+	virtual sf::Vector2f getSize()const override;
+
+protected:
+	///Protected functions
+
+	//draw the container widget. can be overridden.
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
+
+	//process events
+	virtual bool processEvent(const sf::Event& event,const sf::Vector2f& parent_pos)override;
+	virtual void processEvents(const sf::Vector2f& parent_pos)override;
+
+private:
+	///Private variables
+
+	//The layout of the container
+	Layout* _layout;
 };
 
 
+///Constructors and destructors
+
+//Constructor with optional parent
 Container::Container(Widget* parent) : Widget(parent), _layout(nullptr) {}
+
+//Destructor. Deletes contained layout.
 Container::~Container()
 {
-  if(_layout != nullptr and _layout->_parent == this) {
-    _layout->_parent = nullptr;
-    delete _layout;
-  }
+	if((_layout != nullptr) && (_layout->_parent == this))
+	{
+		_layout->_parent = nullptr;
+		delete _layout;
+	}
 }
 
 
+///Setters
+
+//Set the layout of this container
 void Container::setLayout(Layout* layout)
 {
-  if(_layout != nullptr and _layout->_parent == this) {
-    _layout->_parent = nullptr;
-  }
-  if((_layout = layout) != nullptr) {
-    _layout->_parent = this;
-    _layout->updateShape();
-  }
+	//clear previous layout
+	if((_layout != nullptr) && (_layout->_parent == this)) 
+	{
+		_layout->_parent = nullptr;
+	}
+
+	//set current layout
+	if((_layout = layout) != nullptr)
+	{
+		_layout->_parent = this;
+		_layout->updateShape();
+	}
 }
 
 
+///Getters
+
+//Get the layout of this container
 Layout* Container::getLayout()const {return _layout;}
+
+//Get the size of this container
 sf::Vector2f Container::getSize()const
 {
   sf::Vector2f res(0,0);
@@ -54,6 +97,11 @@ sf::Vector2f Container::getSize()const
   res = _layout->getSize();
   return res;
 }
+
+
+///Drawing the widget
+
+//draw the container widget's layout
 void Container::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
   if(_layout)
@@ -61,13 +109,18 @@ void Container::draw(sf::RenderTarget& target, sf::RenderStates states) const
 }
 
 
+///Event handling
+
+//Process an event 
 bool Container::processEvent(const sf::Event& event,const sf::Vector2f& parent_pos)
 {
-    bool res = false;
-    if(and _layout)
-        res = _layout->processEvent(event,parent_pos);
-    return res;
+    bool result = false;
+    if(_layout)
+		result = _layout->processEvent(event,parent_pos);
+    return result;
 }
+
+//process all events
 void Container::processEvents(const sf::Vector2f& parent_pos)
 {
     if(_layout)

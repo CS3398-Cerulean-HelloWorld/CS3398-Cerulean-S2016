@@ -1,4 +1,4 @@
-#include "Widget/TextButton.h"
+#include "Widget/ActionTarget.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -11,8 +11,8 @@ int main()
 	sf::Font font;
 	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
 
-	//create text button widget
-	TextButton btn ("BUTTON", font);
+	//create widget
+	//TextButton btn ("BUTTON", font);
 
 	///main window loop
 	while (window.isOpen())
@@ -29,8 +29,8 @@ int main()
 
 		window.clear();
 
-		//draw the text button widget
-		window.draw(btn);
+		//draw the widget
+		//window.draw(btn);
 		
 		window.display();
 	}

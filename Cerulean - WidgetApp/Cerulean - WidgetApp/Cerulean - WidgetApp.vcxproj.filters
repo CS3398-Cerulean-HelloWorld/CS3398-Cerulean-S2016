@@ -50,5 +50,11 @@
     <ClInclude Include="Widget\Widget.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Widget\ActionTarget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Widget\Action.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

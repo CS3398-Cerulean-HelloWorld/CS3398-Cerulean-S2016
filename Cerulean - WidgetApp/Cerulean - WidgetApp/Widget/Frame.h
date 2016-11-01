@@ -1,7 +1,9 @@
+#pragma once
 #ifndef FRAME_H_INCLUDED
 #define FRAME_H_INCLUDED
 
-#include "Widget.h"
+#include "Container.h"
+#include "ActionTarget.h"
 
 class Frame : public Container, protected ActionTarget<int>
 {
