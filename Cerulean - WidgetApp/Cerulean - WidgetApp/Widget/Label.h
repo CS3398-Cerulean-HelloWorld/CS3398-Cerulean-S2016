@@ -44,7 +44,8 @@ private:
 	//draw the label widget, can be overridden.
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
-	///Private variables:
+protected:
+	///Protected variables:
 
 	//Text the label widget contains
 	sf::Text _text;

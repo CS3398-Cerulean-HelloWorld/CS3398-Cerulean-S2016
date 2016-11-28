@@ -1,3 +1,5 @@
 ﻿  main.cpp
+c:\users\zachary\source\repos\cs3398-cerulean-s2016\cerulean - widgetapp\cerulean - widgetapp\main.cpp(57): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\zachary\source\repos\cs3398-cerulean-s2016\cerulean - widgetapp\cerulean - widgetapp\main.cpp(58): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
   Cerulean - WidgetApp.vcxproj -> C:\Users\Zachary\Source\Repos\CS3398-Cerulean-S2016\Cerulean - WidgetApp\x64\Debug\Cerulean - WidgetApp.exe
   Cerulean - WidgetApp.vcxproj -> C:\Users\Zachary\Source\Repos\CS3398-Cerulean-S2016\Cerulean - WidgetApp\x64\Debug\Cerulean - WidgetApp.pdb (Full PDB)

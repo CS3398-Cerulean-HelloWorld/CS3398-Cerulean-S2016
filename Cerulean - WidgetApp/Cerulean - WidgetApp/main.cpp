@@ -1,6 +1,4 @@
-#include "Widget/VLayout.h"
-#include "Widget/Container.h"
-#include "Widget/TextButton.h"
+#include "Widget/SpeechBubble.h"
 
 #include <SFML/Graphics.hpp>
 
@@ -15,25 +13,25 @@ int main()
 	sf::Font font;
 	font.loadFromFile("C:/Windows/Fonts/Arial.ttf");
 
-	//create widgets
-	Container* container = new Container;
-	VLayout* layout = new VLayout(container);
+	//load speech bubble texture
+	sf::Texture texture;
+	texture.loadFromFile("Speech Bubble Large.png");
 
-	TextButton* btn = new TextButton("Do nothing.", font, sf::Vector2f(400, 100));
-	//btn->setFillColor(sf::Color::Red);
-	layout->add(btn);
+	//get sprite for speech bubble
+	sf::Sprite sprite;
+	sprite.setTexture(texture);
+	sprite.setTextureRect(sf::IntRect(3, 30, 35, 52));//use smallest speech bubble
+	sprite.setColor(sf::Color(255, 255, 255, 200));
+	sprite.setScale(sf::Vector2f(4, 1.5));
 
-	btn = new TextButton("Also do nothing.", font, sf::Vector2f(400, 100));
-	//btn->setFillColor(sf::Color::Green);
-	layout->add(btn);
+	sprite.setPosition(-25, -8); //set sprite offset
 
-	btn = new TextButton("Close the program.", font, sf::Vector2f(400, 100));
-	//btn->setFillColor(sf::Color::Blue);
-	layout->add(btn);
 
-	
-
-	container->setLayout(layout);
+	//create widget
+	SpeechBubble bubble(sprite, "Speech-bubble", font);
+	bubble.setCharacterSize(10);
+	bubble.setPosition(200, 50);
+	bubble.setTextColor(sf::Color(0, 0, 0, 255));
 
 	///main window loop
 	while (window.isOpen())
@@ -44,27 +42,28 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-
-			//get which button was pressed
-			int evt = container->processEvent(event, sf::Vector2f(0.f, 0.f));
-			
-		
-			if (evt)
-			{
-				std::cout << evt << std::endl;
-
-				if (evt & 4)
-					window.close();
-			}
 			
 		}
 
 		window.clear();
 
 		//draw the widget
-		window.draw(*container);
+		window.draw(bubble);
 		
 		window.display();
+
+
+		//slide bubble across the screen
+		float bubx = bubble.getPosition().x + 0.02;
+		float buby = bubble.getPosition().y + 0.02;
+
+		if (bubx >= window.getSize().x)
+			bubx = 0.f;
+
+		if (buby >= window.getSize().y)
+			buby = 0.f;
+
+		bubble.setPosition(sf::Vector2f(bubx, buby));
 	}
 
 	return 0;
