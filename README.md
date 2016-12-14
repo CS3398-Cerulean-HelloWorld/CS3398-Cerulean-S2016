@@ -1,6 +1,6 @@
 SOUL ENSHRINED
 
-This project is a 2 dimension turn-based, descision role playing game. The project was coded in C++, and the framework for the game was designed using the Simple Fast Media Library (SFML). The art assets are the original work of team members and were created using a free online sprite editor named Piskel.  
+This project is a 2 dimension turn-based, decision role playing game. The project was coded in C++, and the framework for the game was designed using the Simple Fast Media Library (SFML). The art assets are the original work of team members and were created using a free online sprite editor named Piskel.  
 
 To build this project download Microsoft Visual Studio 2015 if it is not already installed on your machine. You will also need to download SFML version 2.4.1 from the following link.
 http://www.sfml-dev.org/download/sfml/2.4.1/
