@@ -11,3 +11,9 @@ ARTWORK: All of the artwork e.g., background, monsters, and spell animations wer
 
 Play on!
 - The Cerulean Team
+- Jodie Barnes
+- Kyle Greer
+- Ryan Haynes
+- Katrina Vermillion
+- Donovan Wells
+- Zachary Westerman
